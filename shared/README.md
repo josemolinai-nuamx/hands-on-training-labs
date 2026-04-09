@@ -1,0 +1,2 @@
+# Recursos reutilizables entre labs
+
