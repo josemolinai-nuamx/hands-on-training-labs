@@ -41,9 +41,6 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   │   ├── ⚙️ loki-config.yaml
 │   │   │   ├── ⚙️ namespace.yaml
 │   │   │   └── ⚙️ release.yaml
-│   │   ├── 📁 postgresql
-│   │   │   ├── ⚙️ kustomization.yaml
-│   │   │   └── ⚙️ namespace.yaml
 │   │   ├── 📁 reposources
 │   │   │   ├── 📝 README.md
 │   │   │   ├── ⚙️ actions-runner-controller.yaml
@@ -65,13 +62,15 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   ├── 📁 dev
 │   │   ├── 📁 apps
 │   │   │   └── 📝 Readme.md
+│   │   ├── 📁 flux-system
+│   │   │   ├── ⚙️ gotk-components.yaml
+│   │   │   ├── ⚙️ gotk-sync.yaml
+│   │   │   └── ⚙️ kustomization.yaml
 │   │   ├── 📁 infrastructure
 │   │   │   ├── 📁 nginx-ingress
 │   │   │   │   └── ⚙️ kustomization.yaml
 │   │   │   ├── 📁 observabilidad
 │   │   │   │   ├── 📝 README.md
-│   │   │   │   └── ⚙️ kustomization.yaml
-│   │   │   ├── 📁 postgresql
 │   │   │   │   └── ⚙️ kustomization.yaml
 │   │   │   ├── 📁 reposources
 │   │   │   │   ├── 📝 README.md
@@ -80,7 +79,6 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   ├── 📁 kustoms
 │   │   │   ├── ⚙️ nginx-ingress-kustomization.yaml
 │   │   │   ├── ⚙️ observabilidad-kustomization.yaml
-│   │   │   ├── ⚙️ postgresql-kustomization.yaml
 │   │   │   └── ⚙️ reposources-kustomization.yaml
 │   │   ├── 📝 README.md
 │   │   └── ⚙️ kustomization.yaml
