@@ -9,7 +9,7 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 
 ## 🧩 Estructura del Repositorio
 
-📁 flux_repo
+```text
 ├── 📁 bases
 │   ├── 📁 apps
 │   │   └── 📝 Readme.md
@@ -17,10 +17,7 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   ├── 📁 nginx-ingress
 │   │   │   ├── ⚙️ kustomization.yaml
 │   │   │   └── ⚙️ namespace.yaml
-│   │   ├── 📁 postgresql
-│   │   │   ├── ⚙️ kustomization.yaml
-│   │   │   └── ⚙️ namespace.yaml
-│   │   ├── 📁 prometheus
+│   │   ├── 📁 observabilidad
 │   │   │   ├── 📁 dashboards
 │   │   │   │   ├── ⚙️ container-log.yaml
 │   │   │   │   └── ⚙️ datasources.yaml
@@ -44,6 +41,9 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   │   ├── ⚙️ loki-config.yaml
 │   │   │   ├── ⚙️ namespace.yaml
 │   │   │   └── ⚙️ release.yaml
+│   │   ├── 📁 postgresql
+│   │   │   ├── ⚙️ kustomization.yaml
+│   │   │   └── ⚙️ namespace.yaml
 │   │   ├── 📁 reposources
 │   │   │   ├── 📝 README.md
 │   │   │   ├── ⚙️ actions-runner-controller.yaml
@@ -68,27 +68,25 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   ├── 📁 infrastructure
 │   │   │   ├── 📁 nginx-ingress
 │   │   │   │   └── ⚙️ kustomization.yaml
-│   │   │   ├── 📁 postgresql
-│   │   │   │   └── ⚙️ kustomization.yaml
-│   │   │   ├── 📁 prometheus
+│   │   │   ├── 📁 observabilidad
 │   │   │   │   ├── 📝 README.md
+│   │   │   │   └── ⚙️ kustomization.yaml
+│   │   │   ├── 📁 postgresql
 │   │   │   │   └── ⚙️ kustomization.yaml
 │   │   │   ├── 📁 reposources
 │   │   │   │   ├── 📝 README.md
 │   │   │   │   └── ⚙️ kustomization.yaml
 │   │   │   └── 📝 Readme.md
 │   │   ├── 📁 kustoms
-│   │   │   ├── ⚙️ contour-kustomization.yaml
 │   │   │   ├── ⚙️ nginx-ingress-kustomization.yaml
+│   │   │   ├── ⚙️ observabilidad-kustomization.yaml
 │   │   │   ├── ⚙️ postgresql-kustomization.yaml
-│   │   │   ├── ⚙️ prometheus-kustomization.yaml
-│   │   │   ├── ⚙️ reposources-kustomization.yaml
-│   │   │   └── ⚙️ vault-kustomization.yaml
+│   │   │   └── ⚙️ reposources-kustomization.yaml
 │   │   ├── 📝 README.md
 │   │   └── ⚙️ kustomization.yaml
 │   ├── 📁 produccion
 │   │   ├── 📁 apps
-│   │   ├── 📁 infraestructure
+│   │   ├── 📁 infrastructure
 │   │   └── 📁 kustoms
 │   ├── 📁 staging
 │   └── 📝 README.md
@@ -96,7 +94,7 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 ├── 📁 utils
 │   └── 📝 README.md
 └── 📝 README.md
-
+```
 ---
 
 ## ⚙️ Componentes Principales
@@ -117,44 +115,9 @@ Cada entorno contiene un subdirectorio `flux-system` con los manifiestos `gotk-c
 
 ### 🛠️ Utils (`utils/`)
 Incluye herramientas auxiliares:
-- **`00-terraform/`** → Estructura IaC para la provisión automática de infraestructura en Azure (AKS, networking, backend de estado, etc.).
-  - Contiene módulos reutilizables (`modules/aks`) y definiciones principales (`main.tf`, `variables.tf`, `outputs.tf`).
-
----
-
-## 🚀 Flujo de Trabajo (GitOps + Terraform)
-
-1. **Terraform** (ubicado en `utils/00-terraform/`) crea y configura los recursos de infraestructura base en Azure, incluyendo el clúster AKS y el almacenamiento del estado remoto.
-2. **FluxCD** sincroniza automáticamente los manifests del repositorio con el clúster, aplicando las configuraciones definidas en `env/` y `overlays/`.
-3. Las actualizaciones se gestionan mediante **Pull Requests** para mantener control y trazabilidad sobre los cambios en la infraestructura o aplicaciones.
-
----
-
-## 🔐 Autenticación y Seguridad
-
-- El acceso a los repositorios y despliegues está gestionado mediante tokens personales (PAT) de Azure DevOps.
-- Las credenciales y secretos sensibles deben manejarse mediante **External Secrets** o **Vault**, nunca en texto plano.
-
----
-
-## 📈 Monitoreo y Observabilidad
-
-El módulo `bases/infrastructure/prometheus` implementa un stack de monitoreo que incluye:
-- **Prometheus** para métricas.
-- **Loki + Fluentd** para logs centralizados.
-- **Grafana** (opcional, si se incluye en reposources) para visualización.
-
----
-
-## 🧾 Referencias
-
-- [GitOps-Despliegue de AKS](https://dev.azure.com/Bcentral-Arquitectura/ETAD/_wiki/wikis/ETAD.wiki/34/GitOps-Despliegue-de-AKS)
-- [FluxCD Documentation](https://fluxcd.io/docs/)
-- [Terraform Azure Provider](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs)
-- [Kustomize](https://kubectl.docs.kubernetes.io/references/kustomize/)
-- [Azure DevOps Pipelines](https://learn.microsoft.com/en-us/azure/devops/pipelines/)
 
 ---
 
 > ⚠️ **Nota:** Toda modificación en `bases/` o `overlays/` debe ser probada en `dev` antes de su promoción a `staging` o `producción`.
 
+---
