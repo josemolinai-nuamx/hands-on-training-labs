@@ -10,7 +10,6 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 ## 🧩 Estructura del Repositorio
 
 ```text
-```
 ├── 📁 bases
 │   ├── 📁 apps
 │   │   └── 📝 Readme.md
@@ -100,7 +99,6 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   └── ⚙️ test-oom-pod.yaml
 │   └── 📝 README.md
 └── 📝 README.md
-```
 ```
 ---
 
