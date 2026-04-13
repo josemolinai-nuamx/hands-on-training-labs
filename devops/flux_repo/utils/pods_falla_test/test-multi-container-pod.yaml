@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-multi-container-pod
+  namespace: falla-test
+spec:
+  containers:
+  - name: working-container
+    image: nginx
+    ports:
+    - containerPort: 80
+  - name: failing-container
+    image: busybox
+    command: ['sh', '-c', 'echo "ERROR: Sidecar failed to start"; exit 1']
+  restartPolicy: Never

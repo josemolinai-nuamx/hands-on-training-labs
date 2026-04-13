@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-failing-deployment
+  namespace: falla-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-fail
+  template:
+    metadata:
+      labels:
+        app: test-fail
+    spec:
+      containers:
+      - name: fail-app
+        image: busybox
+        command: 
+          - sh
+          - -c
+          - |
+            COUNTER=0
+            while true; do
+              COUNTER=$((COUNTER+1))
+              if [ $COUNTER -eq 5 ]; then
+                echo "ERROR: Application crashed after 5 iterations" >&2
+                exit 1
+              fi
+              echo "INFO: Iteration $COUNTER completed" >&2
+              sleep 10
+            done
+      restartPolicy: Always

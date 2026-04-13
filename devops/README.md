@@ -25,3 +25,6 @@ Pasos en GitHub:
 Haz clic en "Generate token" en la parte inferior de la página.
 
 ¡IMPORTANTE! Aparecerá el token (una cadena larga de caracteres). Cópialo y guárdalo en un lugar seguro de inmediato, ya que no podrás volver a verlo después de cerrar la página.
+
+## generar kubeconfig cluster 
+k3d kubeconfig get rbac-cluster > rbac-cluster.yaml
