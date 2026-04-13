@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./overlays/dev/infrastructure/nginx-ingress
+  path: ./infrastructure/nginx-ingress
   prune: true
   sourceRef:
     kind: GitRepository
