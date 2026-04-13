@@ -10,6 +10,7 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 ## 🧩 Estructura del Repositorio
 
 ```text
+```
 ├── 📁 bases
 │   ├── 📁 apps
 │   │   └── 📝 Readme.md
@@ -20,7 +21,8 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   ├── 📁 observabilidad
 │   │   │   ├── 📁 dashboards
 │   │   │   │   ├── ⚙️ container-log.yaml
-│   │   │   │   └── ⚙️ datasources.yaml
+│   │   │   │   ├── ⚙️ datasources.yaml
+│   │   │   │   └── ⚙️ pod-failure.yaml
 │   │   │   ├── 📁 fluentd-loki
 │   │   │   │   ├── ⚙️ clusterrolebinding.yaml
 │   │   │   │   ├── ⚙️ config.yaml
@@ -31,11 +33,8 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   │   │   ├── 📁 loki
 │   │   │   │   ├── ⚙️ config-yaml.yaml
 │   │   │   │   ├── ⚙️ deployment.yaml
-│   │   │   │   ├── ⚙️ grafana-ingress-nginx.yaml
-│   │   │   │   ├── ⚙️ grafana-ingress.yaml
 │   │   │   │   ├── ⚙️ kustomization.yaml
-│   │   │   │   ├── ⚙️ service.yaml
-│   │   │   │   └── ⚙️ tls-secret.yaml
+│   │   │   │   └── ⚙️ service.yaml
 │   │   │   ├── 📝 README.md
 │   │   │   ├── ⚙️ kustomization.yaml
 │   │   │   ├── ⚙️ loki-config.yaml
@@ -90,8 +89,18 @@ Su propósito es centralizar la definición de infraestructura, aplicaciones y e
 │   └── 📝 README.md
 ├── 📁 pipelines
 ├── 📁 utils
+│   ├── 📁 pods_falla_test
+│   │   ├── ⚙️ kustomization.yaml
+│   │   ├── ⚙️ namespace.yaml
+│   │   ├── ⚙️ test-crashloop-pod.yaml
+│   │   ├── ⚙️ test-error-logs-pod.yaml
+│   │   ├── ⚙️ test-failed-pod.yaml
+│   │   ├── ⚙️ test-failing-deployment.yaml
+│   │   ├── ⚙️ test-multi-container-pod.yaml
+│   │   └── ⚙️ test-oom-pod.yaml
 │   └── 📝 README.md
 └── 📝 README.md
+```
 ```
 ---
 
