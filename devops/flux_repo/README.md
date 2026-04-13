@@ -1,4 +1,4 @@
-# 📦 Repositorio: bcentral-poc-infra
+# 📦 Repositorio: hands-on-training-labs
 
 ## 🧭 Descripción General
 

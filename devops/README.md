@@ -1,10 +1,14 @@
 # Automatización y CI/CD
 
+## Configuracion boostrap Flux
+
 flux bootstrap git \
+  --token-auth=true \
   --url=https://github.com/josemolinai-nuamx/hands-on-training-labs \
   --branch=main \
   --path=./devops/flux_repo/overlays/dev \
-  --namespace=flux-system
+  --namespace=flux-system \
+  --interval=1m
 
 ## Genertar token.
 
