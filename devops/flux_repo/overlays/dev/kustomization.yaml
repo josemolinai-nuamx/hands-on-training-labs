@@ -6,10 +6,10 @@ resources:
   # - ./kustoms/prometheus-kustomization.yaml
   # - ./kustoms/postgresql-kustomization.yaml
 
-  - ./devops/flux_repo/overlays/dev/kustoms/reposources-kustomization.yaml
-  - ./devops/flux_repo/overlays/dev/kustoms/nginx-ingress-kustomization.yaml
-  - ./devops/flux_repo/overlays/dev/kustoms/observabilidad-kustomization.yaml
-  - ./devops/flux_repo/overlays/dev/kustoms/postgresql-kustomization.yaml
+  - ./kustoms/reposources-kustomization.yaml
+  - ./kustoms/nginx-ingress-kustomization.yaml
+  - ./kustoms/observabilidad-kustomization.yaml
+  - ./kustoms/postgresql-kustomization.yaml
 
 
 

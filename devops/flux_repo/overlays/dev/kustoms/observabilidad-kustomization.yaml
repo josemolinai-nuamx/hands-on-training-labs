@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./devops/flux_repo/overlays/dev/infrastructure/observabilidad
+  path: ./overlays/dev/infrastructure/observabilidad
   prune: true
   sourceRef:
     kind: GitRepository
