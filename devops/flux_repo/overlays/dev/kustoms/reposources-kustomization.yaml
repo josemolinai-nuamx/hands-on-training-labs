@@ -6,7 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/reposources
+  path: ./devops/flux_repo/overlays/dev/infrastructure/reposources
+  #path: ./infrastructure/reposources
   prune: true
   sourceRef:
     kind: GitRepository
