@@ -4,6 +4,4 @@ kind: Kustomization
 resources:
   - config-yaml.yaml
   - service.yaml
-  - deployment.yaml
-  - tls-secret.yaml
-  - grafana-ingress.yaml
+  - deployment.yaml 

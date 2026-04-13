@@ -9,8 +9,6 @@ resources:
   - ./loki/config-yaml.yaml
   - ./loki/service.yaml
   - ./loki/deployment.yaml
-  - ./loki/tls-secret.yaml
-  - ./loki/grafana-ingress-nginx.yaml
   - ./fluentd-loki/serviceaccount.yaml
   - ./fluentd-loki/fluentd-clusterrole.yaml
   - ./fluentd-loki/clusterrolebinding.yaml
