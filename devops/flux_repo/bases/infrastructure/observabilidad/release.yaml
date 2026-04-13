@@ -53,15 +53,24 @@ spec:
         enabled: false
     prometheus:
       prometheusSpec:
-        podMonitorNamespaceSelector:
-          any: true
+        # podMonitorNamespaceSelector:
+        #   any: true
+        # podMonitorSelector: {}
+        # podMonitorSelectorNilUsesHelmValues: false
+        # ruleNamespaceSelector:
+        #   any: true
+        # ruleSelector: {}
+        # ruleSelectorNilUsesHelmValues: false
+        # serviceMonitorNamespaceSelector:
+        #   any: true
+        # serviceMonitorSelector: {}
+        # serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorNamespaceSelector: {}        # Selecciona todos los namespaces
         podMonitorSelector: {}
         podMonitorSelectorNilUsesHelmValues: false
-        ruleNamespaceSelector:
-          any: true
+        ruleNamespaceSelector: {}              # Selecciona todos los namespaces
         ruleSelector: {}
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorNamespaceSelector:
-          any: true
+        serviceMonitorNamespaceSelector: {}    # Selecciona todos los namespaces
         serviceMonitorSelector: {}
         serviceMonitorSelectorNilUsesHelmValues: false
