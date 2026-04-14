@@ -17,7 +17,7 @@ demo-app/
 └── ⚙️ values.yaml          # Valores configurables por defecto
 ```
 
-# 1 Instalación
+# 1 Instalar
 
 ## Instalar el chart por primera vez (imagen nginx:1.25.0)
 
