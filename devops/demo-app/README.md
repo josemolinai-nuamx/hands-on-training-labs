@@ -17,7 +17,7 @@ demo-app/
 └── ⚙️ values.yaml          # Valores configurables por defecto
 ```
 
-# 1 Instalacion
+# 1 Instalación
 
 ## Instalar el chart por primera vez (imagen nginx:1.25.0)
 
@@ -114,3 +114,17 @@ helm history demo-app -n demo
 
 - Kubernetes 1.19+
 - Helm 3.0+
+
+# Acceso a App
+
+Portfordware
+```bash
+kubectl port-forward svc/demo-app 8080:80 -n demo
+```
+En el navegador acceder ahttp://localhost:8080/
+
+# 4 Desinstalar
+
+```bash
+helm uninstall demo-app -n demo
+```
