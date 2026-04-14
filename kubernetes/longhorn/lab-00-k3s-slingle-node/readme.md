@@ -2,7 +2,24 @@
 
 **Objetivo**: levantar Kubernetes en el host Ubuntu e instalar Longhorn funcional.
 
-## Paso 1 — Instalar k3s
+
+## Paso 1 Instalar iscsi  
+
+```bash
+sudo apt-get update
+sudo apt-get install -y open-iscsi nfs-common
+
+# Iniciar y habilitar el servicio
+sudo systemctl enable --now iscsid
+sudo systemctl status iscsid   # debe mostrar active (running)
+
+# Verificar que iscsiadm responde
+sudo iscsiadm --version
+# iscsi-initiator-utils 6.x.x
+```
+
+
+## Paso 2 — Instalar k3s
 
 ```bash
 curl -sfL https://get.k3s.io | sh -
@@ -12,6 +29,7 @@ sudo systemctl status k3s
 
 # Configurar kubeconfig
 mkdir -p ~/.kube
+# mv ~/.kube/config ~/.kube/k3d-lab # Respaldo de kubeconfig de cluster k3d-lab
 sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 sudo chown $USER ~/.kube/config
 chmod 600 ~/.kube/config
@@ -22,7 +40,7 @@ kubectl get nodes
 # ubuntu     Ready    control-plane,master   1m    v1.33.x
 ```
 
-## Paso 2 — Instalar Longhorn
+## Paso 3 — Instalar Longhorn
 
 ```bash
 # Agregar repositorio Helm
@@ -47,7 +65,7 @@ kubectl -n longhorn-system rollout status deploy/longhorn-driver-deployer
 kubectl -n longhorn-system get pods
 ```
 
-## Paso 3 — Acceder a la UI de Longhorn
+## Paso 4 — Acceder a la UI de Longhorn
 
 ```bash
 # En una terminal separada (mantener abierta durante los labs)
