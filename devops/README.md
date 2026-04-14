@@ -26,5 +26,25 @@ Haz clic en "Generate token" en la parte inferior de la página.
 
 ¡IMPORTANTE! Aparecerá el token (una cadena larga de caracteres). Cópialo y guárdalo en un lugar seguro de inmediato, ya que no podrás volver a verlo después de cerrar la página.
 
-## generar kubeconfig cluster 
-k3d kubeconfig get rbac-cluster > rbac-cluster.yaml
+## generar kubeconfig cluster
+```bash 
+k3d kubeconfig get lab > lab.yaml
+```
+
+
+## Herramientas
+
+### github-desktop
+
+```bash
+wget -qO - https://mirror.mwt.me/shiftkey-desktop/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/mwt-desktop.gpg > /dev/null
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mwt-desktop.gpg] https://mirror.mwt.me/shiftkey-desktop/deb/ any main" > /etc/apt/sources.list.d/mwt-desktop.list'
+```
+```bash
+sudo apt update && sudo apt install github-desktop
+```
+### OpenLens
+```bash
+curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366/OpenLens-6.5.2-366.amd64.deb
+sudo apt install ./OpenLens-6.5.2-366.amd64.deb
+```
