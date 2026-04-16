@@ -10,6 +10,9 @@ flux bootstrap git \
   --namespace=flux-system \
   --interval=1m
 
+## Token = ghp_ / 5qx7 / b5bE / FTWY / TjR / rJU / 98y / DzB / x8L / XnG / 2w3 / jJu
+¡IMPORTANTE! Para armar el token por favor eliminar " / " desde ghp_ y validar que no queden espacios. 
+
 ## Genertar token.
 
 Pasos en GitHub:
