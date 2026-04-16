@@ -2,7 +2,10 @@
 
 Este repositorio contiene un Helm chart de demostración para practicar operaciones de **Instalacion**, **upgrade** y **rollback** en Kubernetes utilizando **Helm.**
 
-Instala una aplicacion con base a nginx en su version 1.25.0 y permite actualizarla a un version 1.27.0.  
+Instala una aplicacion con base a nginx en su version 1.25.0 y permite actualizarla a un version 1.27.0. 
+
+Para consultar versiones disponibles de nginx:
+- https://github.com/nginx/nginx/tags
 
 # Árbol de archivos del Helm Chart
 
@@ -23,34 +26,34 @@ demo-app/
 
 ```bash
 helm install demo-app ./demo-app \
-  --namespace demo \
+  --namespace demo-app \
   --create-namespace
 ```
 
 ## Verificar que quedó instalado
 
 ```bash
-helm list -n demo
-kubectl get pods -n demo
+helm list -n demo-app
+kubectl get pods -n demo-app
 ```
 
 # 2 Actualizar (Upgrade)
 
-## Opción A — cambiar tag directamente en el comando
+### Opción A — cambiar tag directamente en el comando
 
 ```bash
 helm upgrade demo-app ./demo-app \
-  --namespace demo \
+  --namespace demo-app \
   --set image.tag="1.27.0"
 ```
 
-## Opción B — editar values.yaml y luego upgradear
+### Opción B — editar values.yaml y luego upgradear
 
-### En values.yaml cambiar:  tag: "1.27.0"
+#### En values.yaml cambiar:  tag: "1.27.0"
 
 ```bash
 helm upgrade demo-app ./demo-app \
-  --namespace demo \
+  --namespace demo-app \
   -f values.yaml
 ```
 
@@ -59,13 +62,13 @@ helm upgrade demo-app ./demo-app \
 ## Ver historial de revisiones del release
 
 ```bash
-helm history demo-app -n demo
+helm history demo-app -n demo-app
 ```
 
 ## Verificar la imagen corriendo en el pod
 
 ```bash
-kubectl describe pod -n demo \
+kubectl describe pod -n demo-app \
   -l app.kubernetes.io/name=demo-app \
   | grep Image:
 ```
@@ -73,7 +76,7 @@ kubectl describe pod -n demo \
 ## Ver los values activos de la revisión actual
 
 ```bash
-helm get values demo-app -n demo
+helm get values demo-app -n demo-app
 ```
 
 # 4 Rollback
@@ -81,19 +84,19 @@ helm get values demo-app -n demo
 ## Ver revisiones disponibles
 
 ```bash
-helm history demo-app -n demo
+helm history demo-app -n demo-app
 ```
 
 ## Rollback a la revisión anterior (revision 1 = install inicial)
 
 ```bash
-helm rollback demo-app 1 -n demo
+helm rollback demo-app 1 -n demo-app
 ```
 
 ### Confirmar que volvió a nginx:1.25.0
 
 ```bash
-kubectl describe pod -n demo \
+kubectl describe pod -n demo-app \
   -l app.kubernetes.io/name=demo-app \
   | grep Image:
 ```
@@ -101,7 +104,7 @@ kubectl describe pod -n demo \
 ## Historial ahora mostrará revisión 3 (rollback)
 
 ```bash
-helm history demo-app -n demo
+helm history demo-app -n demo-app
 ```
 
 # 📝 Notas adicionales
@@ -119,12 +122,22 @@ helm history demo-app -n demo
 
 Portfordware
 ```bash
-kubectl port-forward svc/demo-app 8080:80 -n demo
+kubectl port-forward svc/demo-app 8080:80 -n demo-app
 ```
-En el navegador acceder ahttp://localhost:8080/
+En el navegador acceder a http://localhost:8080/
 
 # 4 Desinstalar
 
+Eliminar el release y opcionalmente borrar el namespace
+
+1. Desinstalar el release de Helm
+
 ```bash
-helm uninstall demo-app -n demo
+helm uninstall demo-app --namespace demo-app
+```
+
+2. Borrar el namespace (esto eliminará todo lo que haya quedado dentro)
+
+```bash
+kubectl delete namespace demo-app
 ```

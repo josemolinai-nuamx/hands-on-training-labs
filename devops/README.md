@@ -43,8 +43,20 @@ sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mwt-desktop.gpg]
 ```bash
 sudo apt update && sudo apt install github-desktop
 ```
+
 ### OpenLens
+
+Interfaz de usuario para administrar clústeres de Kubernetes
+
 ```bash
 curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366/OpenLens-6.5.2-366.amd64.deb
 sudo apt install ./OpenLens-6.5.2-366.amd64.deb
 ```
+
+### MobaXterm
+
+ Software de escritorio remoto para Windows. Incluye herramientas de red, como SSH, VNC, MOSH o FTP y Unix, lo que ayuda a conectarse y manejar tareas o aplicaciones desde computadoras remotas.
+
+- https://mobaxterm.mobatek.net/
+
+- https://mobaxterm.mobatek.net/download.html
