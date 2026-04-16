@@ -1,4 +1,4 @@
-# Automatización y CI/CD
+# Contenido General
 
 ## Configuracion boostrap Flux
 
@@ -33,7 +33,6 @@ Haz clic en "Generate token" en la parte inferior de la página.
 ```bash 
 k3d kubeconfig get lab > lab.yaml
 ```
-
 
 ## Herramientas
 
