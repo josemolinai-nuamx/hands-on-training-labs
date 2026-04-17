@@ -55,4 +55,4 @@ curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366
 sudo apt install ./OpenLens-6.5.2-366.amd64.deb
 ```
 
-Me faolto un exit
+Me falto un exit.
