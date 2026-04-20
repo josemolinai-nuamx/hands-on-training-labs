@@ -1,0 +1,87 @@
+services:
+  blockchain:
+    build: ./blockchain
+    container_name: lab-blockchain
+    ports:
+      - "8545:8545"
+    volumes:
+      - contract-data:/app/deployments
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -sf -X POST -H 'Content-Type: application/json' --data '{\"jsonrpc\":\"2.0\",\"method\":\"eth_blockNumber\",\"params\":[],\"id\":1}' http://localhost:8545 | grep -q result"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: lab-postgres
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab
+      POSTGRES_DB: labdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d labdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api-service:
+    build: ./api-service
+    container_name: lab-api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      RPC_URL: http://blockchain:8545
+      DB_URL: postgres://lab:lab@postgres:5432/labdb
+      CONTRACT_ADDRESS_FILE: /shared/contract-address.json
+      SIGNER_PRIVATE_KEY: 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+      LOG_LEVEL: info
+    volumes:
+      - contract-data:/shared:ro
+    depends_on:
+      blockchain:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  event-listener:
+    build: ./event-listener
+    container_name: lab-listener
+    environment:
+      RPC_URL: http://blockchain:8545
+      DB_URL: postgres://lab:lab@postgres:5432/labdb
+      CONTRACT_ADDRESS_FILE: /shared/contract-address.json
+      POLLING_INTERVAL_MS: 1000
+      LOG_LEVEL: info
+    volumes:
+      - contract-data:/shared:ro
+    depends_on:
+      blockchain:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+
+  dashboard:
+    build: ./dashboard
+    container_name: lab-dashboard
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-service
+
+volumes:
+  contract-data:
+  postgres-data:
