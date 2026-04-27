@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: nginx
   #por ajsute de version  
-  tag: "1.27.0"       # <-- aquí cambiamos la versión
+  tag: "1.25.0"       # <-- aquí cambiamos la versión
   pullPolicy: IfNotPresent
 
 service:
