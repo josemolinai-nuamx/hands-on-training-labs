@@ -2,9 +2,9 @@
 name: Deploy Demo App (Helm)
 
 on:
-  # push:
-  #   branches:
-  #     - main
+   push:
+     branches:
+       - main
       
 
 jobs:
