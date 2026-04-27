@@ -1,0 +1,33 @@
+---
+name: Deploy Demo App (Helm)
+
+on:
+  # push:
+  #   branches:
+  #     - main
+      
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: verificar kubectl
+        run: kubectl get nodes
+
+      - name: verificar Helm
+        run: helm version
+
+      - name: deploy con Helm (install/upgrade)
+        run: |
+          helm upgrade --install demo-app ./devops/demo-app \
+            --namespace demo-app \
+            --create-namespace
+
+      - name: verificar despliegue
+        run: |
+          kubectl get pods -n demo-app
+          kubectl get svc -n demo-app

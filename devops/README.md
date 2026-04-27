@@ -54,3 +54,5 @@ Interfaz de usuario para administrar clústeres de Kubernetes
 curl -LO https://github.com/MuhammedKalkan/OpenLens/releases/download/v6.5.2-366/OpenLens-6.5.2-366.amd64.deb
 sudo apt install ./OpenLens-6.5.2-366.amd64.deb
 ```
+
+Me falto un exit.
