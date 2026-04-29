@@ -19,6 +19,16 @@ Este laboratorio incluye los siguientes recursos:
 * Un deployment con comportamiento inestable
 * Casos de uso reales para monitoreo
 
+```
+├── ⚙️ kustomization.yaml
+├── ⚙️ namespace.yaml
+├── ⚙️ test-crashloop-pod.yaml
+├── ⚙️ test-error-logs-pod.yaml
+├── ⚙️ test-failed-pod.yaml
+├── ⚙️ test-failing-deployment.yaml
+├── ⚙️ test-multi-container-pod.yaml
+└── ⚙️ test-oom-pod.yaml
+```
 ---
 
 ## 🎯 Objetivo del Ejercicio
