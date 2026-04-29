@@ -6,7 +6,8 @@ resources:
   - release.yaml
   - ./dashboards/datasources.yaml
   - ./dashboards/container-log.yaml
-  - ./dashboards/pod-failure.yaml
+  - ./dashboards/dcv-pod-failure-monitor.yaml
+  - ./dashboards/dcv-pod-failure-monitor-v2.yaml
   - ./loki/config-yaml.yaml
   - ./loki/service.yaml
   - ./loki/deployment.yaml
