@@ -135,6 +135,11 @@ y probar
 kubectl port-forward svc/demo-app 8082:80 -n demo-app
 ```
 
+Verificar versión desplegada de la aplicación
+```bash
+kubectl exec -n demo-app deployment/demo-app -- nginx -v
+```
+
 En el navegador web
 
 http://localhost:8082
