@@ -132,9 +132,9 @@ demo-app-xxxxxxx-yyyy   1/1     Running   0          7d22h
 y probar
 
 ```bash
-kubectl port-forward svc/demo-app 8080:80 -n demo-app
+kubectl port-forward svc/demo-app 8082:80 -n demo-app
 ```
 
 En el navegador web
 
-http://localhost:8080
+http://localhost:8082
