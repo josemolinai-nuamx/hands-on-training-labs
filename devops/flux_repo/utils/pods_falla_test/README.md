@@ -187,7 +187,6 @@ Después de desplegar este laboratorio debaria poder:
 
 * ✅ Identificar fallas rápidamente
 * ✅ Correlacionar métricas y logs
-* ✅ Validar alertas
 * ✅ Simular escenarios reales de producción
 
 
