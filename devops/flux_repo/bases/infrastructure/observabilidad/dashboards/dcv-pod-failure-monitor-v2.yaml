@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dcv-pod-failure-monitor-v2
-  namespace: falla-test
+  namespace: monitoring
   labels:
     grafana_dashboard: "1"
 data:
