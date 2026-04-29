@@ -916,7 +916,7 @@ data:
       ]
     },
     "timezone": "browser",
-    "title": "Pod Failure Monitor",
-    "uid": "pod-failure-monitor",
+    "title": "DCV Pod Failure Monitor",
+    "uid": "dcv-pod-failure-monitor",
     "version": 1
     }
