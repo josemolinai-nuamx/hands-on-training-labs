@@ -1,4 +1,3 @@
-# grafana-dashboard-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,217 +5,194 @@ metadata:
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/part-of: kube-prometheus-stack
 data:
   dcv-pod-failure-monitor-v2.json: |
     {
-      "dashboard": {
-        "title": "Falla Test - Pod Monitoring",
-        "tags": ["kubernetes", "pods", "failure"],
-        "timezone": "browser",
-        "panels": [
+      "annotations": {
+        "list": [
           {
-            "title": "Pod Status Overview",
-            "type": "stat",
-            "gridPos": {"h": 4, "w": 4, "x": 0, "y": 0},
-            "targets": [
-              {
-                "expr": "count(kube_pod_status_phase{namespace='falla-test', phase='Running'})",
-                "legendFormat": "Running"
-              },
-              {
-                "expr": "count(kube_pod_status_phase{namespace='falla-test', phase='Failed'})",
-                "legendFormat": "Failed"
-              },
-              {
-                "expr": "count(kube_pod_status_phase{namespace='falla-test', phase='Pending'})",
-                "legendFormat": "Pending"
-              },
-              {
-                "expr": "count(kube_pod_status_phase{namespace='falla-test', phase='Unknown'})",
-                "legendFormat": "Unknown"
-              }
-            ]
-          },
-          {
-            "title": "Container Restarts (CrashLoopBackOff)",
-            "type": "graph",
-            "gridPos": {"h": 8, "w": 8, "x": 0, "y": 4},
-            "targets": [
-              {
-                "expr": "sum(kube_pod_container_status_restarts_total{namespace='falla-test', pod=~'test-crashloop.*'}) by (pod)",
-                "legendFormat": "{{pod}}"
-              }
-            ],
-            "yaxes": [{"format": "short"}, {"format": "short"}]
-          },
-          {
-            "title": "Pod Phase Timeline",
-            "type": "state-timeline",
-            "gridPos": {"h": 8, "w": 16, "x": 8, "y": 4},
-            "targets": [
-              {
-                "expr": "kube_pod_status_phase{namespace='falla-test'}",
-                "legendFormat": "{{pod}} - {{phase}}"
-              }
-            ]
-          },
-          {
-            "title": "Error Logs Counter",
-            "type": "graph",
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
-            "targets": [
-              {
-                "expr": "count_over_time({namespace='falla-test', pod='test-error-logs-pod'} |= 'ERROR' [5m])",
-                "legendFormat": "ERROR logs"
-              },
-              {
-                "expr": "count_over_time({namespace='falla-test', pod='test-error-logs-pod'} |= 'CRITICAL' [5m])",
-                "legendFormat": "CRITICAL logs"
-              }
-            ]
-          },
-          {
-            "title": "Memory Usage (OOM Risk)",
-            "type": "gauge",
-            "gridPos": {"h": 8, "w": 6, "x": 12, "y": 12},
-            "targets": [
-              {
-                "expr": "container_memory_usage_bytes{namespace='falla-test', pod='test-oom-pod'} / container_spec_memory_limit_bytes{namespace='falla-test', pod='test-oom-pod'} * 100",
-                "legendFormat": "Memory Usage %"
-              }
-            ],
-            "fieldConfig": {
-              "defaults": {
-                "unit": "percent",
-                "min": 0,
-                "max": 100,
-                "thresholds": {
-                  "steps": [
-                    {"color": "green", "value": null},
-                    {"color": "orange", "value": 70},
-                    {"color": "red", "value": 85}
-                  ]
-                }
-              }
-            }
-          },
-          {
-            "title": "Multi-Container Pod Health",
-            "type": "table",
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20},
-            "targets": [
-              {
-                "expr": "kube_pod_container_status_ready{namespace='falla-test', pod='test-multi-container-pod'}",
-                "format": "table",
-                "legendFormat": "{{container}}"
-              }
-            ],
-            "transformations": [
-              {
-                "id": "organize",
-                "options": {
-                  "excludeByName": {
-                    "Time": true,
-                    "__name__": true,
-                    "instance": true,
-                    "job": true
-                  },
-                  "indexByName": {
-                    "container": 0,
-                    "pod": 1,
-                    "Value": 2
-                  },
-                  "renameByName": {
-                    "container": "Container",
-                    "pod": "Pod",
-                    "Value": "Ready (1=Yes, 0=No)"
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "title": "Failed Pods (Exit Code Analysis)",
-            "type": "piechart",
-            "gridPos": {"h": 6, "w": 6, "x": 12, "y": 20},
-            "targets": [
-              {
-                "expr": "count(kube_pod_container_status_terminated_reason{namespace='falla-test', reason='Error'})",
-                "legendFormat": "Error"
-              },
-              {
-                "expr": "count(kube_pod_container_status_terminated_reason{namespace='falla-test', reason='OOMKilled'})",
-                "legendFormat": "OOMKilled"
-              },
-              {
-                "expr": "count(kube_pod_container_status_terminated_reason{namespace='falla-test', reason='Completed'})",
-                "legendFormat": "Completed"
-              }
-            ]
-          },
-          {
-            "title": "Deployment Health - test-failing-deployment",
-            "type": "graph",
-            "gridPos": {"h": 8, "w": 12, "x": 0, "y": 28},
-            "targets": [
-              {
-                "expr": "kube_deployment_status_replicas_available{namespace='falla-test', deployment='test-failing-deployment'}",
-                "legendFormat": "Available Replicas"
-              },
-              {
-                "expr": "kube_deployment_status_replicas_unavailable{namespace='falla-test', deployment='test-failing-deployment'}",
-                "legendFormat": "Unavailable Replicas"
-              },
-              {
-                "expr": "kube_deployment_status_replicas_desired{namespace='falla-test', deployment='test-failing-deployment'}",
-                "legendFormat": "Desired Replicas"
-              }
-            ]
-          },
-          {
-            "title": "Alert List - Critical Pods",
-            "type": "alertlist",
-            "gridPos": {"h": 8, "w": 12, "x": 12, "y": 28},
-            "options": {
-              "sortOrder": 2,
-              "showOptions": "current",
-              "maxItems": 10,
-              "alertName": "PodFailing"
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
             },
-            "targets": [
-              {
-                "expr": "kube_pod_status_phase{namespace='falla-test', phase=~'Failed|Unknown'} == 1"
-              }
-            ]
-          },
-          {
-            "title": "Log Error Frequency Heatmap",
-            "type": "heatmap",
-            "gridPos": {"h": 8, "w": 24, "x": 0, "y": 36},
-            "targets": [
-              {
-                "expr": "sum(rate({namespace='falla-test'} |~ 'ERROR|CRITICAL|FATAL' [1m])) by (pod)",
-                "legendFormat": "{{pod}}"
-              }
-            ],
-            "yAxis": {"format": "short"}
-          }
-        ],
-        "variables": [
-          {
-            "name": "pod",
-            "type": "query",
-            "query": "label_values(kube_pod_info{namespace='falla-test'}, pod)",
-            "includeAll": true,
-            "multi": true
-          },
-          {
-            "name": "time_range",
-            "type": "interval",
-            "query": "1m,5m,15m,30m,1h,3h,6h,12h,24h",
-            "auto": true,
-            "auto_count": 30
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
           }
         ]
-      }
+      },
+      "editable": true,
+      "panels": [
+        {
+          "title": "Pod Status Overview",
+          "type": "stat",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0},
+          "targets": [
+            {
+              "expr": "count(kube_pod_status_phase{namespace=\"falla-test\", phase=\"Running\"})",
+              "legendFormat": "Running",
+              "refId": "A"
+            },
+            {
+              "expr": "count(kube_pod_status_phase{namespace=\"falla-test\", phase=\"Failed\"})",
+              "legendFormat": "Failed",
+              "refId": "B"
+            },
+            {
+              "expr": "count(kube_pod_status_phase{namespace=\"falla-test\", phase=\"Pending\"})",
+              "legendFormat": "Pending",
+              "refId": "C"
+            },
+            {
+              "expr": "count(kube_pod_status_phase{namespace=\"falla-test\", phase=\"Unknown\"})",
+              "legendFormat": "Unknown",
+              "refId": "D"
+            }
+          ],
+          "options": {
+            "reduceOptions": {
+              "calcs": ["lastNotNull"]
+            }
+          }
+        },
+        {
+          "title": "CrashLoopBackOff Restarts",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+          "targets": [
+            {
+              "expr": "sum(kube_pod_container_status_restarts_total{namespace=\"falla-test\"}) by (pod)",
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "Pod Phase Timeline",
+          "type": "state-timeline",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+          "targets": [
+            {
+              "expr": "kube_pod_status_phase{namespace=\"falla-test\"}",
+              "legendFormat": "{{pod}} - {{phase}}",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "Error Logs Counter",
+          "type": "timeseries",
+          "datasource": {
+            "type": "loki",
+            "uid": "loki"
+          },
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+          "targets": [
+            {
+              "expr": "count_over_time({namespace=\"falla-test\"} |= \"ERROR\" [5m])",
+              "legendFormat": "ERROR",
+              "refId": "A"
+            },
+            {
+              "expr": "count_over_time({namespace=\"falla-test\"} |= \"CRITICAL\" [5m])",
+              "legendFormat": "CRITICAL",
+              "refId": "B"
+            }
+          ]
+        },
+        {
+          "title": "Memory Usage %",
+          "type": "gauge",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 8, "w": 6, "x": 12, "y": 12},
+          "targets": [
+            {
+              "expr": "container_memory_usage_bytes{namespace=\"falla-test\"} / container_spec_memory_limit_bytes{namespace=\"falla-test\"} * 100",
+              "refId": "A"
+            }
+          ],
+          "fieldConfig": {
+            "defaults": {
+              "unit": "percent",
+              "min": 0,
+              "max": 100
+            }
+          }
+        },
+        {
+          "title": "Container Readiness",
+          "type": "table",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20},
+          "targets": [
+            {
+              "expr": "kube_pod_container_status_ready{namespace=\"falla-test\"}",
+              "format": "table",
+              "refId": "A"
+            }
+          ]
+        },
+        {
+          "title": "Deployment Health",
+          "type": "timeseries",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20},
+          "targets": [
+            {
+              "expr": "kube_deployment_status_replicas_available{namespace=\"falla-test\"}",
+              "legendFormat": "Available",
+              "refId": "A"
+            },
+            {
+              "expr": "kube_deployment_status_replicas_unavailable{namespace=\"falla-test\"}",
+              "legendFormat": "Unavailable",
+              "refId": "B"
+            }
+          ]
+        }
+      ],
+      "schemaVersion": 42,
+      "tags": ["kubernetes", "pods", "monitoring"],
+      "templating": {
+        "list": [
+          {
+            "name": "namespace",
+            "type": "constant",
+            "query": "falla-test"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "title": "DCV Pod Failure Monitor v2",
+      "uid": "dcv-pod-failure-monitor-v2",
+      "version": 1
     }
