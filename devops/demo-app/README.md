@@ -122,9 +122,9 @@ helm history demo-app -n demo-app
 
 Portfordware
 ```bash
-kubectl port-forward svc/demo-app 8080:80 -n demo-app
+kubectl port-forward svc/demo-app 8082:80 -n demo-app
 ```
-En el navegador acceder a http://localhost:8080/
+En el navegador acceder a http://localhost:8082
 
 # 4 Desinstalar
 
